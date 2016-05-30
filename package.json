@@ -1,0 +1,24 @@
+{
+  "name": "http-hosts-pool",
+  "version": "0.1.0",
+  "author": "Atres Lesne <brain@atreslesne.com>",
+  "license": "MIT",
+  "description": "Hosts pool for http requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha -R spec",
+    "coverage": "NODE_ENV=test ./node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -u exports -R spec test/**/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atreslesne/lib-node-hosts-pool"
+  },
+  "dependencies": {
+    "async": "^2.0.0-rc.5"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.5.3"
+  }
+}
