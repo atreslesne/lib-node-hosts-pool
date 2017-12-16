@@ -1,6 +1,6 @@
 {
     "name": "http-hosts-pool",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "author": "Atres Lesne <brain@atreslesne.com>",
     "license": "MIT",
     "description": "Hosts pool for http requests",
@@ -8,7 +8,8 @@
     "scripts": {
         "test": "NODE_ENV=test ./node_modules/.bin/mocha -R spec",
         "coverage": "NODE_ENV=test ./node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -u exports -R spec test/**/*",
-        "coveralls": "NODE_ENV=test ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -fr ./coverage"
+        "coveralls": "NODE_ENV=test ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -fr ./coverage",
+        "documentation": "./node_modules/.bin/documentation build index.js -f md -o ./docs/api.md"
     },
     "engines": {
         "node": ">=6.2"
@@ -23,6 +24,7 @@
     "devDependencies": {
         "chai": "^3.5.0",
         "coveralls": "^2.11.9",
+        "documentation": "^5.3.5",
         "istanbul": "^0.4.3",
         "mocha": "^2.5.3",
         "mocha-lcov-reporter": "^1.2.0"
