@@ -1,8 +1,6 @@
 'use strict';
 
 const assert = require('chai').assert;
-
-const http = require('http');
 const async = require('async');
 const Pool = require('../index').FirstAvailableHost;
 const mock = require('./mockServer');
@@ -20,7 +18,13 @@ describe('First available host', function() {
         }, done);
     });
 
-    it('Skip not available host', () => {
+    after(done => {
+        async.each(servers, (server, callback) => {
+            server.close(callback)
+        }, done);
+    });
+
+    it('Пропуск недоступного хоста', () => {
         let pool = new Pool(['localhost:9012', 'localhost:9010', 'localhost:9011']);
 
         return pool.get('/plain').then(result => {
@@ -28,7 +32,7 @@ describe('First available host', function() {
         });
     });
 
-    it('Skip on timeout', () => {
+    it('Пропуск по таймауту', () => {
         let pool = new Pool(['localhost:9010', 'localhost:9011'], {
             timeout: 2000
         });
@@ -38,7 +42,7 @@ describe('First available host', function() {
         });
     });
 
-    it('Skip on error', () => {
+    it('Пропуск по ошибке', () => {
         let pool = new Pool(['localhost:9010', 'localhost:9011']);
 
         return pool.get('/err500').then(result => {
@@ -46,7 +50,7 @@ describe('First available host', function() {
         });
     });
 
-    it('All hosts error', () => {
+    it('Ошибка на всех хостах', () => {
         let pool = new Pool(['localhost:9010', 'localhost:9011']);
 
         return pool.get('/err404').then(
@@ -57,7 +61,7 @@ describe('First available host', function() {
         );
     });
 
-    it('Auth request', () => {
+    it('Запрос с авторизацией', () => {
         let pool = new Pool('localhost:9010', {
             headers: { 'Authorization': 'Basic dGVzdDpwYXNz' }
         });
@@ -67,7 +71,7 @@ describe('First available host', function() {
         });
     });
 
-    it('Post request', () => {
+    it('POST запрос', () => {
         let pool = new Pool('localhost:9010');
 
         return pool.post('/post', { a: 'some value' }).then(result => {
@@ -75,7 +79,7 @@ describe('First available host', function() {
         });
     });
 
-    it('Post JSON request', () => {
+    it('POST JSON запрос', () => {
         let pool = new Pool('localhost:9010');
 
         return pool.postJson('/post/json', { a: 'some value' }).then(result => {
